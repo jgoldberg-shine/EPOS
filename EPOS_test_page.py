@@ -1,5 +1,6 @@
 import colorama
 from colorama import init, Fore, Back, Style
+
 colorama.init(autoreset=True)
 
 menu = {
@@ -17,9 +18,26 @@ menu = {
     "Stroopwafel": 0.50
 }
 
+extras = {
+    "Skimmed milk": 0.15,
+    "2% milk": 0.20,
+    "Full fat milk": 0.30,
+    "Almond milk": 0.35,
+    "Oat milk": 0.35,
+    "Soya milk": 0.35,
+    "Lactose-free milk": 0.40,
+    "Custard": 1.00,
+    "Ham 1 slice": 0.50,
+    "Shredded chicken": 1.50,
+    "Butter": 0.30,
+    "Cheese": 1.00,
+    "Salami 1 slice": 0.50,
+    "Salad": 0.70
+}
+
 def start():
     while True:
-        welcome_message = input("""Hello and welcome to the cafe, here is the menu:
+        welcome_message = input("""Hello and welcome to 'Brian's Bistro', here is the menu:
     _______________________________________________________
     │  Drinks                  │  Food                    │
     │ - Tea           : £1.00  │ - Croissant     : £1.50  │
@@ -35,7 +53,7 @@ def start():
         elif welcome_message == "n":
             start()
         else:
-            print("invalid input, enter 'y' or 'n' ")
+            print("Invalid input, enter 'y' or 'n' ")
             continue
         break
 
@@ -48,7 +66,25 @@ def start():
         order_count = int(input("How many would you like: "))
         total_cost += menu[order_input] * order_count
         print(Fore.GREEN + f"{order_count} {order_input}(s) have been added to your order. Current total: £{total_cost:.2f}")
-        
+
+        # Ask if the user wants any extras
+        extra_order = input("Would you like to add any extras? (y/n): ")
+        if extra_order.lower() == 'y':
+            print("Available extras:")
+            for extra in extras:
+                print(f"- {extra}: £{extras[extra]}")
+            while True:
+                chosen_extra = input("Enter the name of the extra you'd like to add, or 'done' to finish: ")
+                if chosen_extra.lower() == 'done':
+                    break
+                elif chosen_extra in extras:
+                    total_cost += extras[chosen_extra]
+                    print(Fore.GREEN + f"{chosen_extra} has been added to your order. Current total: £{total_cost:.2f}")
+                else:
+                    print(Fore.RED + "Sorry, that extra is not available.")
+        elif extra_order.lower() != 'n':
+            print(Fore.RED + "Invalid input. Please enter 'y' or 'n'.")
+
         next_order = input("Would you like to place another order? (y/n) or 'restart' to cancel all items and start again: ")
         if next_order.lower() == 'n':
             break
