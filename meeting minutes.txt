@@ -36,5 +36,9 @@ ensure code has:
 	-libraries have been installed into a virtual environment and requirements.txt created
 	-comment on code 
 
+(14.2.24) AM
 
+-discussed option of separating extras so that only the relevant extras are shown, e.g. skimmed milk won't be shown if you choose toast
+-discussed put classes into a separate file and calling them 
+-issue with code that extras are case sensitive, might be changed later on
 	

@@ -1,0 +1,10 @@
+Name: josh
+Item: ['Tea', 'Mocha']
+Amount: £6.35
+Date and Time: 14-02-2024-- 20:33:08
+
+Name: bob
+Item: ['Mocha', 'Muffin']
+Amount: £14.4
+Date and Time: 14-02-2024-- 20:38:25
+

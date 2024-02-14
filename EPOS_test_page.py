@@ -3,6 +3,8 @@ from colorama import init, Fore, Back, Style
 
 colorama.init(autoreset=True)
 
+from datetime import datetime
+
 menu = {
     "Tea": 1.00,
     "Americano": 1.70,
@@ -34,10 +36,13 @@ extras = {
     "Salami 1 slice": 0.50,
     "Salad": 0.70
 }
+final_order = []
 
 def start():
     while True:
-        welcome_message = input("""Hello and welcome to 'Brian's Bistro', unfortunately our card machine is broken today and we are only accepting cash. Here is the menu:
+        customer_name = input("Hello and welcome to Brian's Bistro, please can I take your name: ")
+        current_datetime = datetime.now().strftime("%d-%m-%Y-- %H:%M:%S")
+        welcome_message = input("""Unfortunately our card machine is broken today and we are only accepting cash. Here is the menu:
     _______________________________________________________
     │  Drinks                  │  Food                    │
     │ - Tea           : £1.00  │ - Croissant     : £1.50  │
@@ -67,12 +72,13 @@ def start():
         order_count = int(input("How many would you like: "))
         total_cost += menu[order_input] * order_count
         print(Fore.GREEN + f"{order_count} {order_input}(s) have been added to your order. Current total: £{total_cost:.2f}")
+        final_order.append(order_input)
 
         extra_order = input("Would you like to add any extras? (y/n): ")
         if extra_order.lower() == 'y':
             print("Available extras:")
             for extra in extras:
-                print(f"- {extra}: £{extras[extra]}")
+                print(f"- {extra}: £{extras[extra]:.2f}")
             while True:
                 chosen_extra = input("Enter the name of the extra you'd like to add, or 'finished' to finish: ").capitalize()
                 if chosen_extra == 'Finished':
@@ -85,12 +91,26 @@ def start():
         elif extra_order.lower() != 'n' and extra_order.lower() != 'y':
             print(Fore.RED + "Invalid input. Please enter 'y' or 'n'.")
 
-        next_order = input("Would you like to place another order? (y/n) or 'restart' to cancel all items and start again: ")
+        next_order = input("Would you like to add another item to your order? (y/n) or 'restart' to cancel all items and start again: ")
         if next_order.lower() == 'n':
             break
         elif next_order.lower() == 'restart':
             total_cost = 0
             start()
-    print(Fore.BLUE + f"The total is £{total_cost:.2f}. Thank you for visiting Brian's Bistro, have a good day")
+
+
+
+    print(Fore.BLUE + f"Here is your order {customer_name} The total is £{total_cost:.2f}. Thank you for visiting Brian's Bistro, have a good day")
+    print(Fore.BLUE + f"Date and Time: {current_datetime}")
+    final_order_str = str(final_order)
+
+
+    f = open("receipts.txt", "a")
+    f.write("Name: " + customer_name + "\n")
+    f.write("Item: " + final_order_str + "\n")
+    f.write("Amount: £"  + str(total_cost) + "\n")
+    f.write("Date and Time: " + current_datetime + "\n\n")
+    f.close()
+
 
 start()
