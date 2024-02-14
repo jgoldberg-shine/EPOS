@@ -75,14 +75,14 @@ def start():
                 print(f"- {extra}: £{extras[extra]}")
             while True:
                 chosen_extra = input("Enter the name of the extra you'd like to add, or 'finished' to finish: ").capitalize()
-                if chosen_extra.capitalize() == 'finished':
+                if chosen_extra == 'Finished':
                     break
                 elif chosen_extra in extras:
                     total_cost += extras[chosen_extra]
                     print(Fore.GREEN + f"{chosen_extra} has been added to your order. Current total: £{total_cost:.2f}")
                 else:
                     print(Fore.RED + "Sorry, that extra is not available.")
-        elif extra_order.lower() != 'n':
+        elif extra_order.lower() != 'n' and extra_order.lower() != 'y':
             print(Fore.RED + "Invalid input. Please enter 'y' or 'n'.")
 
         next_order = input("Would you like to place another order? (y/n) or 'restart' to cancel all items and start again: ")

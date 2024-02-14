@@ -37,7 +37,7 @@ extras = {
 
 def start():
     while True:
-        welcome_message = input("""Hello and welcome to 'Brian's Bistro', here is the menu:
+        welcome_message = input("""Hello and welcome to 'Brian's Bistro', unfortunately our card machine is broken today and we are only accepting cash. Here is the menu:
     _______________________________________________________
     │  Drinks                  │  Food                    │
     │ - Tea           : £1.00  │ - Croissant     : £1.50  │
@@ -47,6 +47,7 @@ def start():
     │ - Mocha         : £2.00  │ - Buttered Roll : £0.70  │
     │ - Hot Chocolate : £2.20  │ - Stroopwafel   : £0.50  │
     │ - Bottled Water : £1.00  │ - Potato Cake   : £1.00  │
+
     Would you like to place an order y/n: """)
         if welcome_message == "y":
             print("Good choice")
@@ -67,22 +68,21 @@ def start():
         total_cost += menu[order_input] * order_count
         print(Fore.GREEN + f"{order_count} {order_input}(s) have been added to your order. Current total: £{total_cost:.2f}")
 
-        # Ask if the user wants any extras
         extra_order = input("Would you like to add any extras? (y/n): ")
         if extra_order.lower() == 'y':
             print("Available extras:")
             for extra in extras:
                 print(f"- {extra}: £{extras[extra]}")
             while True:
-                chosen_extra = input("Enter the name of the extra you'd like to add, or 'done' to finish: ")
-                if chosen_extra.lower() == 'done':
+                chosen_extra = input("Enter the name of the extra you'd like to add, or 'finished' to finish: ").capitalize()
+                if chosen_extra == 'Finished':
                     break
                 elif chosen_extra in extras:
                     total_cost += extras[chosen_extra]
                     print(Fore.GREEN + f"{chosen_extra} has been added to your order. Current total: £{total_cost:.2f}")
                 else:
                     print(Fore.RED + "Sorry, that extra is not available.")
-        elif extra_order.lower() != 'n':
+        elif extra_order.lower() != 'n' and extra_order.lower() != 'y':
             print(Fore.RED + "Invalid input. Please enter 'y' or 'n'.")
 
         next_order = input("Would you like to place another order? (y/n) or 'restart' to cancel all items and start again: ")
@@ -91,6 +91,6 @@ def start():
         elif next_order.lower() == 'restart':
             total_cost = 0
             start()
-    print(Fore.BLUE + f"The total is £{total_cost:.2f}. Thank you for visiting our cafe, have a good day")
+    print(Fore.BLUE + f"The total is £{total_cost:.2f}. Thank you for visiting Brian's Bistro, have a good day")
 
 start()
